@@ -6,58 +6,64 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/03 08:40:17 by sregnard         ###   ########.fr        #
+#    Updated: 2018/12/04 17:05:43 by sregnard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	fillit
+NAME			=	fillit
 
-LIBFT		= 	libft/libft.a
+LIBFT			=	libft/libft.a
 
-LIBFILL		=	fillit.a
+LIBFILL			=	fillit.a
 
-HEADERS		=	-I includes/
-HEADERS		+=	-I libft/
+HEADERS			=	-I includes/
+HEADERS			+=	-I libft/
 
-SRCDIR		=	srcs/
-SRC			= 	$(SRCDIR)main.c
-SRC			+=	$(SRCDIR)errors.c
-SRC			+=	$(SRCDIR)point.c
-SRC			+=	$(SRCDIR)tetriminos.c
-SRC			+=	$(SRCDIR)lst_tetriminos.c
-SRC			+=	$(SRCDIR)solver.c
-SRC			+=	$(SRCDIR)map.c
+SRCDIR			=	srcs/
+SRC				= 	$(SRCDIR)main.c
+SRC				+=	$(SRCDIR)errors.c
+SRC				+=	$(SRCDIR)point.c
+SRC				+=	$(SRCDIR)tetriminos.c
+SRC				+=	$(SRCDIR)lst_tetriminos.c
+SRC				+=	$(SRCDIR)solver.c
+SRC				+=	$(SRCDIR)map.c
 
-OBJ			=	$(SRC:.c=.o)
+OBJ				=	$(SRC:.c=.o)
 	
-CC			=	gcc
-	
-CFLAGS		=	-Wall -Wextra -Werror -g3
+CC				=	gcc	
+CFLAGS			=	-Wall -Wextra -Werror
+XFLAGS			=	-g3
 
-.PHONY		:	all clean fclean re $(LIBFT)
+all				: $(NAME)
 
-all			:	$(NAME)
+$(NAME)			:	$(LIBFT) $(LIBFILL)
+	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $^
 
-$(NAME)		:	$(LIBFT) $(LIBFILL)
-	$(CC) $(CFLAGS) $(HEADERS) -o $@ $^
-
-$(LIBFT)	:
-	make -C libft/
-
-$(LIBFILL)	: $(OBJ)
+$(LIBFILL)		:	$(OBJ)
 	ar rcs $@ $?
 
-%.o			:	%.c
+$(LIBFT)		:
+	$(MAKE) -C libft/
+
+%.o				:	%.c
 	$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $^
 
-clean		:
+clean			:
 	rm -rf $(OBJ)
-	make clean -C libft/
 
-fclean		:	clean
+fclean			:	clean
 	rm -rf $(NAME)
-	rm -rf $(LIBFT)
 	rm -rf $(LIBFILL)
 
-re			:	fclean all
-	make re -C libft/
+re				:	fclean all
+
+cleanlib		:
+	$(MAKE) clean -C libft/
+
+fcleanlib		:
+	$(MAKE) fclean -C libft/
+
+relib			:
+	$(MAKE) re -C libft/
+
+.PHONY			:	all clean fclean re cleanlib fcleanlib relib $(LIBFT)
