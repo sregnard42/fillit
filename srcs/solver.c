@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/04 15:30:19 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/05 18:11:53 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,19 @@ static int	place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
 **	Try placing given tetriminos anywhere on the map
 */
 
-static int	place_tetri(t_map *map, t_tetriminos *tetri)
+static int	place_tetri(t_map *map, t_tetriminos *tetri, t_point *pt)
 {
-	t_point		*pt;
+	//static t_point		*pt = NULL;
 
 	if (tetri->placed == 1)
 		return (0);
-	pt = new_point(0, 0);
 	while (X < END)
 	{
 		while (Y < END)
 		{
 			if (place_at(map, pt, tetri))
 			{
-				ft_memdel((void **)&pt);
+				//ft_memdel((void **)&pt);
 				return (1);
 			}
 			Y += 1;
@@ -71,7 +70,7 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 		Y = 0;
 		X += 1;
 	}
-	ft_memdel((void **)&pt);
+	//ft_memdel((void **)&pt);
 	return (0);
 }
 
@@ -84,14 +83,23 @@ static int	place_all(t_map *map, t_list *head, int nb_tetriminos, int nb_placed)
 	t_list	*lst;
 
 	lst = head;
+	if (nb_tetriminos == nb_placed)
+		return (1);
 	while (lst)
 	{
-		if (place_tetri(map, TETRI) == 1)
+//		ft_putendl(&TETRI->c);
+//			ft_putnbr(X_POS);
+//			ft_putnbr(Y_POS);
+//			ft_putendl("");
+		while (place_tetri(map, TETRI, TETRI->pos) == 1)
 		{
+//			ft_putnbr(X_POS);
+//			ft_putnbr(Y_POS);
+//			ft_putendl("");
+			ft_print_tab(map->map);
+			ft_putendl("");
 			nb_placed++;
 			TETRI->placed = 1;
-			if (nb_tetriminos == nb_placed)
-				return (1);
 			if (place_all(map, head, nb_tetriminos, nb_placed))
 				return (1);
 			else
@@ -100,7 +108,10 @@ static int	place_all(t_map *map, t_list *head, int nb_tetriminos, int nb_placed)
 				TETRI->placed = 0;
 				remove_tetri_from_map(map, TETRI);
 			}
-		}	
+		}
+//			ft_putendl("bonjour");
+		X_POS = 0;
+		Y_POS = 0;
 		lst = lst->next;
 	}
 	return (0);
@@ -118,7 +129,7 @@ char	**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	size_t	size;
 	int		solved;
 
-	size = 3;
+	size = 4;
 	solved = 0;
 	while (solved == 0)
 	{
