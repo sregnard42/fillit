@@ -13,7 +13,6 @@
 #ifndef MAP_H
 # define MAP_H
 
-# include <stdlib.h>
 # include "point.h"
 
 # define MAP	(map->map)
