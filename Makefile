@@ -26,6 +26,7 @@ SRC				+=	$(SRCDIR)point.c
 SRC				+=	$(SRCDIR)tetriminos.c
 SRC				+=	$(SRCDIR)lst_tetriminos.c
 SRC				+=	$(SRCDIR)solver.c
+SRC				+=	$(SRCDIR)solver_utils.c
 SRC				+=	$(SRCDIR)map.c
 
 OBJ				=	$(SRC:.c=.o)
