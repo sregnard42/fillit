@@ -20,6 +20,7 @@
 # include "lst_tetriminos.h"
 # include "solver.h"
 # include "map.h"
+# include "ft_print.h"
 # include <fcntl.h>
 
 # define EMPTY_BLOCK	'.'

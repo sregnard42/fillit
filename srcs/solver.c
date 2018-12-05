@@ -79,8 +79,11 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 **	Try placing all tetriminos on the map
 */
 
-static int	place_all(t_map *map, t_list *head, t_list *lst, int nb_tetriminos, int nb_placed)
+static int	place_all(t_map *map, t_list *head, int nb_tetriminos, int nb_placed)
 {
+	t_list	*lst;
+
+	lst = head;
 	while (lst)
 	{
 		if (place_tetri(map, TETRI) == 1)
@@ -89,10 +92,7 @@ static int	place_all(t_map *map, t_list *head, t_list *lst, int nb_tetriminos, i
 			TETRI->placed = 1;
 			if (nb_tetriminos == nb_placed)
 				return (1);
-			lst = head;
-			while (lst && TETRI->placed == 1)
-				lst = lst->next;
-			if (place_all(map, head, lst, nb_tetriminos, nb_placed))
+			if (place_all(map, head, nb_tetriminos, nb_placed))
 				return (1);
 			else
 			{
@@ -100,9 +100,8 @@ static int	place_all(t_map *map, t_list *head, t_list *lst, int nb_tetriminos, i
 				TETRI->placed = 0;
 				remove_tetri_from_map(map, TETRI);
 			}
-		}
-		else
-			lst = lst->next;
+		}	
+		lst = lst->next;
 	}
 	return (0);
 }
@@ -130,7 +129,7 @@ char	**solve_tetriminos(t_list *lst, int nb_tetriminos)
 		}
 		if (!(map = create_map(size)))
 			return (NULL);
-		solved = place_all(map, lst, lst, nb_tetriminos, 0);
+		solved = place_all(map, lst, nb_tetriminos, 0);
 		reset_tetri_placed(lst);
 		size++;
 	}

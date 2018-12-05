@@ -30,6 +30,7 @@ void	remove_tetri_from_map(t_map *map, t_tetriminos *tetri)
 				MAP[X][Y] = EMPTY_BLOCK;
 			Y += 1;
 		}
+		Y = 0;
 		X += 1;
 	}
 	ft_memdel((void **)&pt);
