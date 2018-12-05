@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/05 14:50:26 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/05 16:28:45 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,29 @@ int		place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
 
 int		place_tetri(t_map *map, t_tetriminos *tetri)
 {
-	t_point		*pt;
+//	t_point		*pt;
 
 	if (tetri->placed == 1)
 		return (0);
-	pt = new_point(0, 0);
-	while (X < END)
+//	pt = new_point(0, 0);
+	while (/*X*/tetri->last_position->x < END)
 	{
-		while (Y < END)
+		while (/*Y*/tetri->last_position->y < END)
 		{
-			if (place_at(map, pt, tetri))
+			if (place_at(map, tetri->last_position, tetri))
 				return (1);
-			Y += 1;
+			/*Y*/tetri->last_position->y += 1;
 		}
-		Y = 0;
-		X += 1;
+		/*Y*/tetri->last_position->y = 0;
+		/*X*/tetri->last_position->x += 1;
 	}
-	ft_memdel((void **)&pt);
+//	ft_memdel((void **)&pt);
 	return (0);
 }
+
+/*
+ **	remove one tetri from the map
+ */
 
 void	remove_one(t_map *map, t_list *lst)
 {
@@ -85,16 +89,13 @@ void	remove_one(t_map *map, t_list *lst)
 		while (j < END)
 		{
 			if (map->map[i][j] == TETRI->c)
-			{
 				map->map[i][j] = '.';
-			}
 			j++;
 		}
 		j = 0;
 		i++;
 	}
 }
-
 
 /*
 **	Try placing all tetriminos on the map
@@ -109,6 +110,13 @@ int		place_all(t_map *map, t_list *lst, int nb_tetriminos, int nb_placed)
 		return (1);
 	while (el)
 	{
+	ft_putendl("TETRI :");
+	ft_putchar(((t_tetriminos*)(el->content))->c);
+	ft_putnbr(((t_tetriminos*)(el->content))->last_position->x);
+	ft_putnbr(((t_tetriminos*)(el->content))->last_position->y);
+	ft_putendl("");
+	ft_print_tab(map->map);
+	ft_putendl("");
 		if (place_tetri(map, ((t_tetriminos*)(el->content))) == 1)
 		{
 			nb_placed++;
@@ -152,11 +160,11 @@ char	**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	size_t	size;
 	int		solved;
 
-	size = 4;
+	size = 2;
 	solved = 0;
 	while (solved == 0)
 	{
-		if (size > 4)
+		if (size > 2)
 		{
 			ft_free_tab(&(MAP));
 			ft_memdel((void **)&map);

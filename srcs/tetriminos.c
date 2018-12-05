@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 15:14:00 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/03 11:00:16 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/05 16:19:44 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_tetriminos		*new_tetriminos(char c)
 		return (NULL);
 	tetri->c = c;
 	tetri->placed = 0;
+	tetri->last_position = new_point(0, 0);
+	ft_putnbr(tetri->last_position->x);
+	ft_putnbr(tetri->last_position->y);
 	return (tetri);
 }
 

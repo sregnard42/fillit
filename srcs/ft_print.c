@@ -1,6 +1,22 @@
 #include "fillit.h"
 
 /*
+**	Display the coordinates of a point
+*/
+
+void		print_point(t_point *pt)
+{
+	if (!pt)
+		return ;
+	ft_putchar('(');
+	ft_putnbr(pt->x);
+	ft_putchar(',');
+	ft_putchar(' ');
+	ft_putnbr(pt->y);
+	ft_putchar(')');
+}
+
+/*
 **	Display tetriminos values
 */
 
@@ -31,22 +47,6 @@ void				print_tetriminos(t_tetriminos *tetri)
 		ft_putln();
 		i++;
 	}
-}
-
-/*
-**	Display the coordinates of a point
-*/
-
-void		print_point(t_point *pt)
-{
-	if (!pt)
-		return ;
-	ft_putchar('(');
-	ft_putnbr(pt->x);
-	ft_putchar(',');
-	ft_putchar(' ');
-	ft_putnbr(pt->y);
-	ft_putchar(')');
 }
 
 /*
