@@ -19,9 +19,6 @@
 
 # define TETRI	((t_tetriminos *)lst->content)
 
-int			set_points(char **content, int i, t_tetriminos **ptr);
-t_list		*get_tetriminos(char **content, int i, char c);
 t_list		*lst_tetriminos(char **content);
-void		reset_tetri_placed(t_list *lst);
 
 #endif

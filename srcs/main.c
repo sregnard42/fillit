@@ -38,6 +38,7 @@ static char	**parse_file(char *file, int *nb_tetriminos)
 	}
 	close(fd) == -1 ? trigger_error(ERR_FILE) : 1;
 	*nb_tetriminos = ((ft_strlen(content) + 1) / 21);
+	(ft_strlen(content) + 1) % 21 > 0 ? trigger_error(ERR_NORM) : 1;
 	*nb_tetriminos < MIN_TETRIMINOS ? trigger_error(ERR_TETRI_MIN) : 1;
 	*nb_tetriminos > MAX_TETRIMINOS ? trigger_error(ERR_TETRI_MAX) : 1;
 	res = ft_strsplit(content, '\n');

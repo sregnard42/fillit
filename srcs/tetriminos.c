@@ -28,7 +28,79 @@ t_tetriminos		*new_tetriminos(char c)
 }
 
 /*
-**	Return point containing the the smallest x and the smallest y encountered
+**	Free tetriminos and its points
+*/
+
+void			free_tetriminos(void **ptr, size_t size)
+{
+	t_tetriminos	*tetri;
+	int				i;
+
+	if (!ptr || !ptr || size < 1)
+		return ;
+	tetri = *ptr;
+	i = 0;
+	while (i < 4)
+	{
+		if (tetri->pt[i])
+			ft_memdel((void **)&(tetri->pt[i]));
+		i++;
+	}
+	ft_memdel((void **)ptr);
+}
+
+
+/*
+**	Returns how many non empty blocks are touching given block
+*/
+
+static int		nb_neighbours(t_tetriminos *tetri, t_point *pt)
+{
+	int	nb;
+
+	nb = 0;
+	if (X > 0)
+		if (tetri->blocks[X - 1][Y] != EMPTY_BLOCK)
+			nb++;
+	if (Y > 0)
+		if (tetri->blocks[X][Y - 1] != EMPTY_BLOCK)
+			nb++;
+	if (X < 3)
+		if (tetri->blocks[X + 1][Y] != EMPTY_BLOCK)
+			nb++;
+	if (Y < 3)
+		if (tetri->blocks[X][Y + 1] != EMPTY_BLOCK)
+			nb++;
+	return (nb);
+}
+
+/*
+**	Returns wheter a tetri has all its blocks linked together 
+**	Returns 6 only if 4 blocks are linked together, 8 if square form
+**	______1______1221_____________
+**	22____2________________1____1_		
+**	22____2___12_____21____2____31
+**	______1____21___12____12____1_
+*/
+
+int			check_blocks(t_tetriminos *tetri)
+{
+	t_point	*pt;
+	int	i;
+	int	nb;
+
+	i = 0;
+	nb = 0;
+	while (i < 4)
+	{
+		pt = tetri->pt[i++];
+		nb += nb_neighbours(tetri, pt);
+	}
+	return (nb >= 6);
+}
+
+/*
+**	Returns point containing the the smallest x and the smallest y encountered
 **	while browsing all tetriminos points
 */
 
@@ -76,26 +148,3 @@ void				normalize_tetriminos(t_tetriminos *tetri)
 	}
 	ft_memdel((void **)&min);
 }
-
-/*
-**	Free tetriminos and its points
-*/
-
-void				free_tetriminos(void **ptr, size_t size)
-{
-	t_tetriminos	*tetri;
-	int				i;
-
-	if (!ptr || !ptr || size < 1)
-		return ;
-	tetri = *ptr;
-	i = 0;
-	while (i < 4)
-	{
-		if (tetri->pt[i])
-			ft_memdel((void **)&(tetri->pt[i]));
-		i++;
-	}
-	ft_memdel((void **)ptr);
-}
-

@@ -16,14 +16,12 @@
 ** Find all points defining a tetriminos
 */
 
-int		set_points(char **content, int i, t_tetriminos **ptr)
+static int	set_points(char **content, int i, t_tetriminos *tetri)
 {
-	t_tetriminos	*tetri;
 	int				pt_count;
 	int				end;
 	int				j;
 
-	tetri = *ptr;
 	pt_count = 0;
 	end = i + 4;
 	while (i < end)
@@ -42,21 +40,21 @@ int		set_points(char **content, int i, t_tetriminos **ptr)
 		i += 1;
 	}
 	pt_count < 4 ? trigger_error(ERR_TETRI_PT_MIN) : 0;
-	return (1);
+	return (check_blocks(tetri));
 }
 
 /*
 ** Create a list element containing a tetriminos
 */
 
-t_list	*get_tetriminos(char **content, int i, char c)
+static t_list	*get_tetriminos(char **content, int i, char c)
 {
 	t_list			*elem;
 	t_tetriminos	*tetri;
 
 	if (!(tetri = new_tetriminos(c)))
 		return (NULL);
-	if (!(set_points(content, i, &tetri)))
+	if (!(set_points(content, i, tetri)))
 	{
 		free_tetriminos((void **)&tetri, sizeof(t_tetriminos));
 		return (NULL);

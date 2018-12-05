@@ -24,7 +24,7 @@
 
 # define EMPTY_BLOCK	'.'
 # define FILLED_BLOCK	'#'
-# define MIN_TETRIMINOS	1
+# define MIN_TETRIMINOS	2
 # define MAX_TETRIMINOS	26
 
 #endif

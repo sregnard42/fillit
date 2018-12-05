@@ -22,6 +22,7 @@
 # define ERR_SEP			"Expected a single separator : \\n."
 # define ERR_LEN			"Expected a line length of 4."
 # define ERR_CHAR			"Unexpected character inside file."
+# define ERR_NORM			"Norm error."
 # define ERR_TETRI_MIN		"Not enough tetriminos."
 # define ERR_TETRI_MAX		"Too many tetriminos."
 # define ERR_TETRI_PT_MIN	"Not enough blocks in tetriminos."

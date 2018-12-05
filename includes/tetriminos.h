@@ -23,8 +23,9 @@ typedef struct		s_tetriminos
 	int				placed;
 }					t_tetriminos;
 
-t_tetriminos		*new_tetriminos(char c);
-void				normalize_tetriminos(t_tetriminos *tetri);
+t_tetriminos			*new_tetriminos(char c);
 void				free_tetriminos(void **ptr, size_t size);
+int				check_blocks(t_tetriminos *tetri);
+void				normalize_tetriminos(t_tetriminos *tetri);
 
 #endif
