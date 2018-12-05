@@ -24,6 +24,7 @@ t_tetriminos		*new_tetriminos(char c)
 		return (NULL);
 	tetri->c = c;
 	tetri->placed = 0;
+	tetri->pos = new_point(0, 0);
 	return (tetri);
 }
 
@@ -46,6 +47,7 @@ void			free_tetriminos(void **ptr, size_t size)
 			ft_memdel((void **)&(tetri->pt[i]));
 		i++;
 	}
+//	ft_memdel((void **)&(tetri->pos));
 	ft_memdel((void **)ptr);
 }
 

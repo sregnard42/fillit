@@ -118,7 +118,7 @@ char	**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	size_t	size;
 	int		solved;
 
-	size = 4;
+	size = 3;
 	solved = 0;
 	while (solved == 0)
 	{

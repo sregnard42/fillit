@@ -21,6 +21,7 @@ typedef struct		s_tetriminos
 	t_point			*pt[4];
 	char			c;
 	int				placed;
+	t_point			*pos;
 }					t_tetriminos;
 
 t_tetriminos			*new_tetriminos(char c);
