@@ -56,22 +56,20 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 
 	if (tetri->placed == 1)
 		return (0);
-	pt = new_point(0, 0);
+	pt = tetri->pos;
+	if (X >= END || Y >= END)
+		return (0);
 	while (X < END)
 	{
 		while (Y < END)
 		{
 			if (place_at(map, pt, tetri))
-			{
-				ft_memdel((void **)&pt);
 				return (1);
-			}
 			Y += 1;
 		}
 		Y = 0;
 		X += 1;
 	}
-	ft_memdel((void **)&pt);
 	return (0);
 }
 
@@ -86,7 +84,7 @@ static int	place_all(t_map *map, t_list *head, int nb_tetriminos, int nb_placed)
 	lst = head;
 	while (lst)
 	{
-		if (place_tetri(map, TETRI) == 1)
+		while (place_tetri(map, TETRI) == 1)
 		{
 			nb_placed++;
 			TETRI->placed = 1;
@@ -99,8 +97,11 @@ static int	place_all(t_map *map, t_list *head, int nb_tetriminos, int nb_placed)
 				nb_placed--;
 				TETRI->placed = 0;
 				remove_tetri_from_map(map, TETRI);
+				Y_POS += 1;
 			}
 		}	
+		if (TETRI->placed == 0)
+			set_point(TETRI->pos, 0, 0);
 		lst = lst->next;
 	}
 	return (0);
@@ -122,7 +123,7 @@ char	**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	solved = 0;
 	while (solved == 0)
 	{
-		if (size > 4)
+		if (size > 3)
 		{
 			ft_free_tab(&(MAP));
 			ft_memdel((void **)&map);
