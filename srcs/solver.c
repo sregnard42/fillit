@@ -6,11 +6,12 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/05 12:44:38 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/05 14:50:26 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include "ft_print.c"
 
 /*
 **	Try placing tetriminos at given point
@@ -54,6 +55,8 @@ int		place_tetri(t_map *map, t_tetriminos *tetri)
 {
 	t_point		*pt;
 
+	if (tetri->placed == 1)
+		return (0);
 	pt = new_point(0, 0);
 	while (X < END)
 	{
@@ -70,29 +73,56 @@ int		place_tetri(t_map *map, t_tetriminos *tetri)
 	return (0);
 }
 
+void	remove_one(t_map *map, t_list *lst)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < END)
+	{
+		while (j < END)
+		{
+			if (map->map[i][j] == TETRI->c)
+			{
+				map->map[i][j] = '.';
+			}
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+}
+
+
 /*
 **	Try placing all tetriminos on the map
 */
 
 int		place_all(t_map *map, t_list *lst, int nb_tetriminos, int nb_placed)
 {
+	t_list	*el;
+
+	el = lst;
 	if (nb_tetriminos == nb_placed)
 		return (1);
-	while (lst)
+	while (el)
 	{
-		if (place_tetri(map, TETRI) == 1)
+		if (place_tetri(map, ((t_tetriminos*)(el->content))) == 1)
 		{
 			nb_placed++;
-			TETRI->placed = 1;
-			if (place_all(map, lst->next, nb_tetriminos, nb_placed))
+			((t_tetriminos*)(el->content))->placed = 1;
+			if (place_all(map, lst, nb_tetriminos, nb_placed))
 				return (1);
 			else
 			{
+				remove_one(map, el);
 				nb_placed--;
-				TETRI->placed = 0;
+				((t_tetriminos*)(el->content))->placed = 0;
 			}
 		}
-		lst = lst->next;
+		el = el->next;
 	}
 	return (0);
 }
