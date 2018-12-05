@@ -13,7 +13,7 @@
 #ifndef TETRIMINOS_H
 # define TETRIMINOS_H
 
-# include "fillit.h"
+# include "point.h"
 
 typedef struct		s_tetriminos
 {

@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "map.h"
+#include "fillit.h"
 
 /*
 **	Generate 2D map of given size filled with empty blocks
 */
 
-t_map	*create_map(size_t size)
+t_map	*create_map(int size)
 {
 	t_map	*map;
 	int		i;

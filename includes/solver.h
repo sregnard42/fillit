@@ -13,8 +13,12 @@
 #ifndef SOLVER_H
 # define SOLVER_H
 
-# include "fillit.h"
+# include "list.h"
+# include "tetriminos.h"
+# include "map.h"
 
 char	**solve_tetriminos(t_list *lst, int nb_tetriminos);
+void	reset_tetri_placed(t_list *lst); 
+void	remove_tetri_from_map(t_map *map, t_tetriminos *tetri);
 
 #endif

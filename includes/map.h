@@ -13,7 +13,8 @@
 #ifndef MAP_H
 # define MAP_H
 
-# include "fillit.h"
+# include <stdlib.h>
+# include "point.h"
 
 # define MAP	(map->map)
 # define END	(map->size)
@@ -24,7 +25,7 @@ typedef struct	s_map
 	int		size;
 }				t_map;
 
-t_map			*create_map(size_t size);
+t_map			*create_map(int size);
 int				block_available(t_map *map, t_point *pt);
 
 #endif

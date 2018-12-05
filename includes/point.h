@@ -13,8 +13,6 @@
 #ifndef POINT_H
 # define POINT_H
 
-# include "fillit.h"
-
 # define X	(pt->x)
 # define Y	(pt->y)
 # define X2	(pt2->x)

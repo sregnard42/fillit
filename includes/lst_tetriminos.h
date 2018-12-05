@@ -13,7 +13,9 @@
 #ifndef LST_TETRIMINOS_H
 # define LST_TETRIMINOS_H
 
-# include "fillit.h"
+# include "tetriminos.h"
+# include "list.h"
+# include "point.h"
 
 # define TETRI	((t_tetriminos *)lst->content)
 
