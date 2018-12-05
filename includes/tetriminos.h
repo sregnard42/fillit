@@ -15,8 +15,8 @@
 
 # include "point.h"
 
-# define X_POS	"tetri->pos->x"
-# define Y_POS	"tetri->pos->y"
+# define X_POS	((tetri->pos)->x)
+# define Y_POS	((tetri->pos)->y)
 
 typedef struct		s_tetriminos
 {
