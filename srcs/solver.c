@@ -6,11 +6,12 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/04 15:30:19 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/05 19:55:02 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
 /*
 **	Try placing tetriminos at given point
@@ -63,9 +64,13 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 	{
 		while (Y < END)
 		{
+//	ft_putendl("segfault 3");
 			if (place_at(map, pt, tetri))
 				return (1);
 			Y += 1;
+//	ft_putnbr(Y);
+//	ft_putnbr(END);
+//	ft_putendl("segfault 4");
 		}
 		Y = 0;
 		X += 1;
@@ -80,10 +85,21 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 static int	place_all(t_map *map, t_list *head, int nb_tetriminos, int nb_placed)
 {
 	t_list	*lst;
+	//char	c;
 
 	lst = head;
 	while (lst)
 	{
+	while (TETRI->placed == 1)
+	{
+		lst = lst->next;
+		if (!lst)
+			lst = head;
+	}
+	ft_putendl(&TETRI->c);
+	ft_print_tab(map->map);
+	ft_putendl("");
+	//	scanf("%c", &c);
 		while (place_tetri(map, TETRI) == 1)
 		{
 			nb_placed++;
@@ -119,11 +135,11 @@ char	**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	size_t	size;
 	int		solved;
 
-	size = 3;
+	size = (nb_tetriminos / 2) + 1;
 	solved = 0;
 	while (solved == 0)
 	{
-		if (size > 3)
+		if (size > (size_t)(nb_tetriminos / 2) + 1)
 		{
 			ft_free_tab(&(MAP));
 			ft_memdel((void **)&map);
