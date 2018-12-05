@@ -16,7 +16,7 @@
 **	Try placing tetriminos at given point
 */
 
-int		place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
+static int	place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
 {
 	t_point	*pt;
 	int		i;
@@ -50,7 +50,7 @@ int		place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
 **	Try placing given tetriminos anywhere on the map
 */
 
-int		place_tetri(t_map *map, t_tetriminos *tetri)
+static int	place_tetri(t_map *map, t_tetriminos *tetri)
 {
 	t_point		*pt;
 
@@ -79,7 +79,7 @@ int		place_tetri(t_map *map, t_tetriminos *tetri)
 **	Try placing all tetriminos on the map
 */
 
-int		place_all(t_map *map, t_list *head, t_list *lst, int nb_tetriminos, int nb_placed)
+static int	place_all(t_map *map, t_list *head, t_list *lst, int nb_tetriminos, int nb_placed)
 {
 	while (lst)
 	{
