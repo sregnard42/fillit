@@ -26,6 +26,5 @@ typedef struct		s_tetriminos
 t_tetriminos		*new_tetriminos(char c);
 void				normalize_tetriminos(t_tetriminos *tetri);
 void				free_tetriminos(void **ptr, size_t size);
-void				print_tetriminos(t_tetriminos *tetri);
 
 #endif

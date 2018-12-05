@@ -36,7 +36,7 @@ XFLAGS			=	-g3
 
 all				: $(NAME)
 
-$(NAME)			:	$(LIBFT) $(LIBFILL)
+$(NAME)			:	$(LIBFILL) $(LIBFT)
 	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $^
 
 $(LIBFILL)		:	$(OBJ)

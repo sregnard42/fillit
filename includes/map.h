@@ -15,10 +15,13 @@
 
 # include "fillit.h"
 
+# define MAP	(map->map)
+# define END	(map->size)
+
 typedef struct	s_map
 {
 	char		**map;
-	size_t		size;
+	int		size;
 }				t_map;
 
 t_map			*create_map(size_t size);

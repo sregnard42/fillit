@@ -49,19 +49,3 @@ void		set_point(t_point *pt, int x, int y)
 	pt->x = x;
 	pt->y = y;
 }
-
-/*
-**	Display the coordinates of a point
-*/
-
-void		print_point(t_point *pt)
-{
-	if (!pt)
-		return ;
-	ft_putchar('(');
-	ft_putnbr(pt->x);
-	ft_putchar(',');
-	ft_putchar(' ');
-	ft_putnbr(pt->y);
-	ft_putchar(')');
-}

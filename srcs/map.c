@@ -13,7 +13,7 @@
 #include "map.h"
 
 /*
-**	Generate tab filled with empty blocks, equivalent of tab[size][size]
+**	Generate 2D map of given size filled with empty blocks
 */
 
 t_map	*create_map(size_t size)
@@ -25,36 +25,31 @@ t_map	*create_map(size_t size)
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
 		return (NULL);
 	map->size = size;
-	if (!(map->map = (char **)malloc(sizeof(char *) * (size + 1))))
+	if (!(MAP = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
 	i = 0;
-	while (i < (int)size)
+	while (i < END)
 	{
-		if (!(map->map[i] = (char *)malloc(sizeof(char) * (size + 1))))
+		if (!(MAP[i] = (char *)malloc(sizeof(char) * (size + 1))))
 			return (NULL);
 		j = 0;
-		while (j < (int)size)
-			map->map[i][j++] = EMPTY_BLOCK;
-		map->map[i++][j] = '\0';
+		while (j < END)
+			MAP[i][j++] = EMPTY_BLOCK;
+		MAP[i++][j] = '\0';
 	}
-	map->map[i] = 0;
+	MAP[i] = 0;
 	return (map);
 }
 
 /*
-**	Returns 1 if given point is valid and is empty in given map
+**	Returns 1 if given block exists and is empty in given map
 */
 
 int		block_available(t_map *map, t_point *pt)
 {
-	int		x;
-	int		y;
-
 	if (!pt)
 		return (0);
-	x = pt->x;
-	y = pt->y;
-	if (x < 0 || y < 0 || x >= (int)map->size || y >= (int)map->size)
+	if (X < 0 || Y < 0 || X >= END || Y >= END)
 		return (0);
-	return (map->map[x][y] == EMPTY_BLOCK);
+	return (MAP[X][Y] == EMPTY_BLOCK);
 }

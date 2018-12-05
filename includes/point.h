@@ -15,6 +15,15 @@
 
 # include "fillit.h"
 
+# define X	(pt->x)
+# define Y	(pt->y)
+# define X2	(pt2->x)
+# define Y2	(pt2->y)
+# define X_MIN	(min->x)
+# define Y_MIN	(min->y)
+# define X_MAX	(max->x)
+# define Y_MAX	(max->y)
+
 typedef struct		s_point
 {
 	int				x;
@@ -25,6 +34,5 @@ t_point				*new_point(int x, int y);
 void				cpy_point(t_point *dst, t_point *src);
 void				set_point(t_point *pt, int x, int y);
 int					isneg_point(t_point *pt);
-void				print_point(t_point *pt);
 
 #endif

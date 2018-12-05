@@ -40,7 +40,6 @@ static char	**parse_file(char *file, int *nb_tetriminos)
 	*nb_tetriminos < MIN_TETRIMINOS ? trigger_error(ERR_TETRI_MIN) : 1;
 	*nb_tetriminos > MAX_TETRIMINOS ? trigger_error(ERR_TETRI_MAX) : 1;
 	res = ft_strsplit(content, '\n');
-	ft_putendl(content);
 	free(content);
 	return (res);
 }

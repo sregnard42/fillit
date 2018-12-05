@@ -97,16 +97,3 @@ t_list	*lst_tetriminos(char **content)
 	}
 	return (lst_head);
 }
-
-/*
-** Display all tetriminos contained in the list
-*/
-
-void	print_lst(t_list *lst)
-{
-	while (lst)
-	{
-		print_tetriminos(lst->content);
-		lst = lst->next;
-	}
-}
