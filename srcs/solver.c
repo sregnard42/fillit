@@ -55,8 +55,8 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 	if (tetri->placed == 1)
 		return (0);
 	pt = tetri->pos;
-	if (X >= END || Y >= END)
-		return (0);
+	if (Y >= END)
+		set_point(pt, X + 1, 0);
 	while (X < END)
 	{
 		while (Y < END)
@@ -65,8 +65,7 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 				return (1);
 			Y += 1;
 		}
-		Y = 0;
-		X += 1;
+		set_point(pt, X + 1, 0);
 	}
 	return (0);
 }
@@ -116,7 +115,9 @@ char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	int		size;
 	int		solved;
 
-	starting_size = ft_sqrt(nb_tetriminos * 4);
+	starting_size = 2;
+	while (starting_size < ((nb_tetriminos * 4) / starting_size))
+		starting_size += 1;
 	size = starting_size;
 	solved = 0;
 	while (solved == 0)

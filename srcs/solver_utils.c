@@ -32,18 +32,14 @@ void	reset_tetri_placed(t_list *lst)
 void	remove_tetri_from_map(t_map *map, t_tetriminos *tetri)
 {
 	t_point	*pt;
+	t_point	*pt2;
+	int	i;
 
-	pt = new_point(0, 0);
-	while (X < END)
+	i = 0;
+	pt = tetri->pos;
+	while(i < 4)
 	{
-		while (Y < END)
-		{
-			if (MAP[X][Y] == tetri->c)
-				MAP[X][Y] = EMPTY_BLOCK;
-			Y += 1;
-		}
-		Y = 0;
-		X += 1;
+		pt2 = tetri->pt[i++];
+		MAP[X + X2][Y + Y2] = EMPTY_BLOCK;
 	}
-	ft_memdel((void **)&pt);
 }
