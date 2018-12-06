@@ -130,7 +130,6 @@ char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
 		if (!(map = create_map(size)))
 			return (NULL);
 		solved = place_all(map, lst, nb_tetriminos, 0);
-		reset_tetri_placed(lst);
 		size++;
 	}
 	tab = MAP;
