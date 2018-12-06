@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 15:14:00 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/03 11:00:16 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/06 09:27:15 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	Create a new tetriminos, c being the char that will be used to identify it
 */
 
-t_tetriminos		*new_tetriminos(char c)
+t_tetriminos	*new_tetriminos(char c)
 {
 	t_tetriminos	*tetri;
 
@@ -51,52 +51,38 @@ void			free_tetriminos(void **ptr, size_t size)
 	ft_memdel((void **)ptr);
 }
 
-
 /*
-**	Returns how many non empty blocks are touching given block
-*/
-
-static int		nb_neighbours(t_tetriminos *tetri, t_point *pt)
-{
-	int	nb;
-
-	nb = 0;
-	if (X > 0)
-		if (tetri->blocks[X - 1][Y] != EMPTY_BLOCK)
-			nb++;
-	if (Y > 0)
-		if (tetri->blocks[X][Y - 1] != EMPTY_BLOCK)
-			nb++;
-	if (X < 3)
-		if (tetri->blocks[X + 1][Y] != EMPTY_BLOCK)
-			nb++;
-	if (Y < 3)
-		if (tetri->blocks[X][Y + 1] != EMPTY_BLOCK)
-			nb++;
-	return (nb);
-}
-
-/*
-**	Returns wheter a tetri has all its blocks linked together 
+**	Returns wheter a tetri has all its blocks linked together
 **	Returns 6 only if 4 blocks are linked together, 8 if square form
 **	______1______1221_____________
-**	22____2________________1____1_		
+**	22____2________________1____1_
 **	22____2___12_____21____2____31
 **	______1____21___12____12____1_
 */
 
-int			check_blocks(t_tetriminos *tetri)
+int				check_blocks(t_tetriminos *tetri)
 {
 	t_point	*pt;
-	int	i;
-	int	nb;
+	int		i;
+	int		nb;
 
 	i = 0;
 	nb = 0;
 	while (i < 4)
 	{
 		pt = tetri->pt[i++];
-		nb += nb_neighbours(tetri, pt);
+		if (X > 0)
+			if (tetri->blocks[X - 1][Y] != EMPTY_BLOCK)
+				nb++;
+		if (Y > 0)
+			if (tetri->blocks[X][Y - 1] != EMPTY_BLOCK)
+				nb++;
+		if (X < 3)
+			if (tetri->blocks[X + 1][Y] != EMPTY_BLOCK)
+				nb++;
+		if (Y < 3)
+			if (tetri->blocks[X][Y + 1] != EMPTY_BLOCK)
+				nb++;
 	}
 	return (nb >= 6);
 }
@@ -106,7 +92,7 @@ int			check_blocks(t_tetriminos *tetri)
 **	while browsing all tetriminos points
 */
 
-static t_point		*find_min(t_tetriminos *tetri)
+static t_point	*find_min(t_tetriminos *tetri)
 {
 	t_point		*min;
 	t_point		*pt;
@@ -131,7 +117,7 @@ static t_point		*find_min(t_tetriminos *tetri)
 **	Place blocks/points representing tetriminos at the top_left
 */
 
-void				normalize_tetriminos(t_tetriminos *tetri)
+void			normalize_tetriminos(t_tetriminos *tetri)
 {
 	t_point		*min;
 	t_point		*pt;

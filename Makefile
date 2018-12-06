@@ -6,7 +6,7 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/04 17:05:43 by sregnard         ###   ########.fr        #
+#    Updated: 2018/12/06 08:43:03 by sregnard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,22 +50,24 @@ $(LIBFT)		:
 %.o				:	%.c
 	$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $^
 
-clean			:
+clean			:	
 	rm -rf $(OBJ)
+	$(MAKE) clean -C libft/
 
 fclean			:	clean
 	rm -rf $(NAME)
 	rm -rf $(LIBFILL)
+	rm -rf $(LIBFT)
 
 re				:	fclean all
 
-cleanlib		:
-	$(MAKE) clean -C libft/
+cleanfill		:
+	rm -rf $(OBJ)
 
-fcleanlib		:
-	$(MAKE) fclean -C libft/
+fcleanfill		:	cleanfill
+	rm -rf $(NAME)
+	rm -rf $(LIBFILL)
 
-relib			:
-	$(MAKE) re -C libft/
+refill			:	fcleanfill all
 
-.PHONY			:	all clean fclean re cleanlib fcleanlib relib $(LIBFT)
+.PHONY			:	all clean fclean re cleanfill fcleanfill refill $(LIBFT)

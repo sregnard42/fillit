@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 08:58:36 by sregnard          #+#    #+#             */
-/*   Updated: 2018/11/30 14:55:11 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/06 08:49:09 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Find all points defining a tetriminos
 */
 
-static int	set_points(char **content, int i, t_tetriminos *tetri)
+static int		set_points(char **content, int i, t_tetriminos *tetri)
 {
 	int				pt_count;
 	int				end;
@@ -69,7 +69,7 @@ static t_list	*get_tetriminos(char **content, int i, char c)
 ** Create a list of all tetriminos
 */
 
-t_list	*lst_tetriminos(char **content)
+t_list			*lst_tetriminos(char **content)
 {
 	t_list			*lst_head;
 	t_list			*elem;
