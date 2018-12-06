@@ -36,7 +36,7 @@ CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror
 XFLAGS			=	-g3
 
-all				: $(LIBFT) $(NAME)
+all				: $(LIBFT) $(OBJDIR) $(NAME)
 
 $(NAME)		:	$(OBJ)
 	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $^ -L libft/ -lft
@@ -44,11 +44,14 @@ $(NAME)		:	$(OBJ)
 $(LIBFT)		:
 	$(MAKE) -C libft/
 
+$(OBJDIR)	:
+	mkdir -p $(OBJDIR)
+
 $(OBJDIR)%.o	:	$(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $^
 
 clean			:	
-	rm -rf $(OBJ)
+	rm -rf $(OBJDIR)
 	$(MAKE) clean -C libft/
 
 fclean			:	clean
@@ -58,7 +61,7 @@ fclean			:	clean
 re				:	fclean all
 
 cleanfill		:
-	rm -rf $(OBJ)
+	rm -rf $(OBJDIR)
 
 fcleanfill		:	cleanfill
 	rm -rf $(NAME)
