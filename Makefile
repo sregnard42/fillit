@@ -6,15 +6,14 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/06 08:43:03 by sregnard         ###   ########.fr        #
+#    Updated: 2018/12/06 10:02:57 by sregnard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	fillit
 
-LIBFT			=	libft/libft.a
-
-LIBFILL			=	fillit.a
+LIBFTDIR		=	libft/
+LIBFT			=	$(LIBFTDIR)libft.a
 
 HEADERS			=	-I includes/
 HEADERS			+=	-I libft/
@@ -30,24 +29,22 @@ SRC				+=	$(SRCDIR)solver_utils.c
 SRC				+=	$(SRCDIR)map.c
 SRC				+=	$(SRCDIR)ft_print.c
 
-OBJ				=	$(SRC:.c=.o)
+OBJDIR			=	objs/
+OBJ				=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 	
 CC				=	gcc	
 CFLAGS			=	-Wall -Wextra -Werror
 XFLAGS			=	-g3
 
-all				: $(NAME)
+all				: $(LIBFT) $(NAME)
 
-$(NAME)			:	$(LIBFILL) $(LIBFT)
-	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $^
-
-$(LIBFILL)		:	$(OBJ)
-	ar rcs $@ $?
+$(NAME)		:	$(OBJ)
+	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $^ -L libft/ -lft
 
 $(LIBFT)		:
 	$(MAKE) -C libft/
 
-%.o				:	%.c
+$(OBJDIR)%.o	:	$(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $^
 
 clean			:	
