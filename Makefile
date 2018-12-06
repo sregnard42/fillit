@@ -6,7 +6,7 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/06 10:02:57 by sregnard         ###   ########.fr        #
+#    Updated: 2018/12/06 10:17:57 by sregnard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,6 @@ clean			:
 
 fclean			:	clean
 	rm -rf $(NAME)
-	rm -rf $(LIBFILL)
 	rm -rf $(LIBFT)
 
 re				:	fclean all
@@ -63,7 +62,6 @@ cleanfill		:
 
 fcleanfill		:	cleanfill
 	rm -rf $(NAME)
-	rm -rf $(LIBFILL)
 
 refill			:	fcleanfill all
 
