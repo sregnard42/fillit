@@ -3,75 +3,158 @@
 /*                                                        :::      ::::::::   */
 /*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdugoudr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/07 12:04:41 by jdugoudr          #+#    #+#             */
-/*   Updated: 2018/12/07 15:23:42 by jdugoudr         ###   ########.fr       */
+/*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
+/*   Updated: 2018/12/07 15:23:44 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+#include <stdio.h>
 
-static int	place_one_tetri(char **map, t_list *lst, int size)
+/*
+**	Try placing tetriminos at given point
+*/
+
+static int	place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
 {
-	
+	t_point	*pt;
+	int		i;
+
+	pt = (t_point *)malloc(sizeof(t_point));
+	i = 0;
+	while (i < 4)
+	{
+		cpy_point(pt, tetri->pt[i++]);
+		set_point(pt, X + X2, Y + Y2);
+		if (block_available(map, pt) == 0)
+		{
+			ft_memdel((void **)&pt);
+			return (0);
+		}
+	}
+	i = 0;
+	while (i < 4)
+	{
+		cpy_point(pt, tetri->pt[i++]);
+		set_point(pt, X + X2, Y + Y2);
+		MAP[X][Y] = tetri->c;
+	}
+	ft_memdel((void **)&pt);
+	return (1);
 }
 
-static int	place_all_tetri(char **map, t_list head, int size)
-{
-	t_list	*lst;
+/*
+**	Try placing given tetriminos anywhere on the map
+*/
 
-	lst = head;
-	while (lst && TETRI->placed == 1)
-		lst = lst->next;
-	if (!lst)
-		return (1);
-	while (lst)
+static int	place_tetri(t_map *map, t_tetriminos *tetri)
+{
+	t_point		*pt;
+
+	if (tetri->placed == 1)
+		return (0);
+	pt = tetri->pos;
+	if (X >= END || Y >= END)
+		return (0);
+	while (X < END)
 	{
-		if (TETRI->placed == 1)
-			while (lst && TETRI->placed == 1)
-				lst = lst->next;
-		else if (place_one_tetri(map, lst, size))
+		while (Y < END)
 		{
-			TETRI->placed = 1;
-			return (place_all_tetri(map, head, size));
+//	ft_putendl("segfault 3");
+			if (place_at(map, pt, tetri))
+				return (1);
+			Y += 1;
+//	ft_putnbr(Y);
+//	ft_putnbr(END);
+//	ft_putendl("segfault 4");
 		}
-		else
-		{
-			if (Y_POS + 1 < size)
-				Y_POS++;
-			else if (Y_POS + 1 == size && X_POS + 1 < size)
-			{
-				Y_POS = 0;
-				X_POS++;
-			}
-			else
-			{
-				Y_POS = 0;
-				X_POS = 0;
-				lst = lst->next;
-			}
-		}
+		Y = 0;
+		X += 1;
 	}
 	return (0);
 }
 
-char		**solve_tetriminos(t_list *lst, int nb_treminos)
-{
-	int		size;
-	char	**map;
+/*
+**	Try placing all tetriminos on the map
+*/
 
-	size = 3;
-	while ((map = creatmap(size)))
+static int	place_all(t_map *map, t_list *head, int nb_tetri, int nb_placed)
+{
+	t_list	*lst;
+//	char	c;
+
+	lst = head;
+	while (lst)
 	{
-		if (place_all_tetri(map, lst, size))
-			break ;
-		else
+		while (TETRI->placed == 1)
 		{
-			reset_tetri_placed(lst);
-			ft_free_tab(map);
-			size++;
+			lst = lst->next;
+			if (!lst)
+				return (0);
 		}
+		while (place_tetri(map, TETRI) == 1)
+		{
+			nb_placed++;
+			TETRI->placed = 1;
+	ft_putchar(TETRI->c);
+	ft_putendl("");
+	ft_print_tab(map->map);
+//			if (nb_tetri > nb_placed && check_place_enough(map, head) == 0)
+//				return (0);
+//	ft_putendl("");
+//	scanf("%c", &c);
+			if (nb_tetri == nb_placed
+					|| place_all(map, head, nb_tetri, nb_placed))
+				return (1);
+			else
+			{
+//		ft_putstr("move or remove : ");
+//		ft_putchar(TETRI->c);
+//		ft_putendl("");
+				nb_placed--;
+				TETRI->placed = 0;
+				remove_tetri_from_map(map, TETRI);
+				Y_POS += 1;
+			}
+		}
+		if (TETRI->placed == 0)
+			set_point(TETRI->pos, 0, 0);
+		lst = lst->next;
 	}
-	return (map);
+	return (0);
+}
+
+/*
+**	Find the smallest map fitting all tetriminos
+*/
+
+char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
+{
+	char	**tab;
+	t_map	*map;
+	int		starting_size;
+	int		size;
+	int		solved;
+
+	starting_size = ft_sqrt(nb_tetriminos * 4);
+	size = starting_size;
+	solved = 0;
+	while (solved == 0)
+	{
+		if (size > starting_size)
+		{
+			ft_free_tab(&(MAP));
+			ft_memdel((void **)&map);
+		}
+		if (!(map = create_map(size)))
+			return (NULL);
+		solved = place_all(map, lst, nb_tetriminos, 0);
+		reset_tetri_placed(lst);
+		size++;
+	}
+	tab = MAP;
+	ft_memdel((void **)&map);
+	return (tab);
 }
