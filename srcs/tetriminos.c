@@ -54,43 +54,7 @@ void			free_tetriminos(void **ptr, size_t size)
 }
 
 /*
-**	Returns wheter a tetri has all its blocks linked together
-**	Returns 6 only if 4 blocks are linked together, 8 if square form
-**	______1______1221_____________
-**	22____2________________1____1_
-**	22____2___12_____21____2____31
-**	______1____21___12____12____1_
-*/
-
-int				check_blocks(t_tetriminos *tetri)
-{
-	t_point	*pt;
-	int		i;
-	int		nb;
-
-	i = 0;
-	nb = 0;
-	while (i < 4)
-	{
-		pt = tetri->pt[i++];
-		if (X > 0)
-			if (tetri->blocks[X - 1][Y] != EMPTY_BLOCK)
-				nb++;
-		if (Y > 0)
-			if (tetri->blocks[X][Y - 1] != EMPTY_BLOCK)
-				nb++;
-		if (X < 3)
-			if (tetri->blocks[X + 1][Y] != EMPTY_BLOCK)
-				nb++;
-		if (Y < 3)
-			if (tetri->blocks[X][Y + 1] != EMPTY_BLOCK)
-				nb++;
-	}
-	return (nb >= 6);
-}
-
-/*
-**	Returns point containing the the smallest x and the smallest y encountered
+**	Returns point containing the the smallest X and Y encountered
 **	while browsing all tetriminos points
 */
 
@@ -116,7 +80,7 @@ static t_point	*find_min(t_tetriminos *tetri)
 }
 
 /*
-**	Returns point containing the the smallest x and the smallest y encountered
+**	Returns point containing the the biggest X and Y encountered
 **	while browsing all tetriminos points
 */
 
@@ -167,4 +131,5 @@ void			normalize_tetriminos(t_tetriminos *tetri)
 	tetri->width = Y_MAX - Y_MIN;
 	tetri->height = X_MAX - X_MIN;
 	ft_memdel((void **)&min);
+	ft_memdel((void **)&max);
 }

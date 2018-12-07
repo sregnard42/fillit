@@ -28,6 +28,10 @@ void	ft_lstdelone(t_list **alst, void (*del)(void **, size_t))
 		prev->next = next;
 		next->prev = prev;
 	}
+	else if (prev)
+		prev->next = next;
+	else if (next)
+		next->prev = prev;
 	del((void **)&(elem->content), elem->content_size);
 	ft_memdel((void **)alst);
 }

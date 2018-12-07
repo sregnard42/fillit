@@ -51,27 +51,17 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 {
 	t_point		*pt;
 
-	if (tetri->placed == 1)
-		return (0);
-//	ft_putln();
-//	ft_putchar(tetri->c);
-//	ft_putln();
-//	ft_putendl("_________");
-//	ft_print_tab(MAP);
 	pt = tetri->pos;
 	if (Y >= END)
 		set_point(pt, X + 1, 0);
-	if (END - X < tetri->height || END - Y < tetri->width)
+	if (X > END - tetri->height || Y > END - tetri->width)
 		return (0);
 	while (X < END)
 	{
 		while (Y < END)
 		{
 			if (place_at(map, pt, tetri))
-			{
-				tetri->placed = 1;
 				return (1);
-			}
 			Y += 1;
 		}
 		set_point(pt, X + 1, 0);
@@ -83,30 +73,18 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 **	Try placing all tetriminos on the map
 */
 
-static int	place_all(t_map *map, t_list *head, int nb_tetri, int nb_placed)
+static int	place_all(t_map *map, t_list *lst)
 {
-	t_list	*lst;
-
-	lst = head;
-	while (lst)
+	if (!lst)
+		return (1);
+	X_POS = 0;
+	Y_POS = 0;
+	while (place_tetri(map, TETRI))
 	{
-		if (TETRI->placed == 0)
-			set_point(TETRI->pos, 0, 0);
-		while (place_tetri(map, TETRI) == 1)
-		{
-			nb_placed++;
-			if (nb_tetri == nb_placed
-					|| place_all(map, head, nb_tetri, nb_placed))
-				return (1);
-			else
-			{
-				nb_placed--;
-				TETRI->placed = 0;
-				remove_tetri_from_map(map, TETRI);
-				Y_POS += 1;
-			}
-		}
-		lst = lst->next;
+		if (place_all(map, lst->next))
+			return (1);
+		remove_tetri_from_map(map, TETRI);
+		Y_POS += 1;
 	}
 	return (0);
 }
@@ -126,7 +104,6 @@ char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	starting_size = 2;
 	while (starting_size < ((nb_tetriminos * 4) / starting_size))
 		starting_size += 1;
-	starting_size = 2;
 	size = starting_size;
 	solved = 0;
 	while (solved == 0)
@@ -138,9 +115,7 @@ char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
 		}
 		if (!(map = create_map(size)))
 			return (NULL);
-		ft_putnbr(size);
-		ft_putln();
-		solved = place_all(map, lst, nb_tetriminos, 0);
+		solved = place_all(map, lst);
 		size++;
 	}
 	tab = MAP;

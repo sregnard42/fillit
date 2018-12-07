@@ -13,6 +13,8 @@
 #ifndef ERRORS_H
 # define ERRORS_H
 
+# include "tetriminos.h"
+
 # define DEBUG				0
 # define DEBUG_ON			"DEBUG : "
 # define MSG_ERR			"error"
@@ -31,6 +33,7 @@
 # define ERR_CREAT_LST		"Error while creating list."
 
 void	check_line(char *line, int line_count);
+int	check_blocks(t_tetriminos *tetri);
 void	trigger_error(char *err_code);
 
 #endif
