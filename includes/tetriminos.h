@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 15:13:04 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/06 12:55:22 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/07 13:04:43 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ typedef struct		s_tetriminos
 	char			c;
 	int				placed;
 	t_point			*pos;
+	int				height;
+	int				width;
 }					t_tetriminos;
 
 t_tetriminos		*new_tetriminos(char c);

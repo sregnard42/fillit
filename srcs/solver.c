@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/06 13:43:41 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/07 14:24:23 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ static int	place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
 	while (i < 4)
 	{
 		cpy_point(pt, tetri->pt[i++]);
-		set_point(pt, X + X2, Y + Y2);
-		MAP[X][Y] = tetri->c;
+		MAP[X + X2][Y + Y2] = tetri->c;
 	}
 	ft_memdel((void **)&pt);
 	return (1);
@@ -54,14 +53,16 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 
 	if (tetri->placed == 1)
 		return (0);
-	ft_putln();
-	ft_putchar(tetri->c);
-	ft_putln();
-	ft_putendl("_________");
-	ft_print_tab(MAP);
+//	ft_putln();
+//	ft_putchar(tetri->c);
+//	ft_putln();
+//	ft_putendl("_________");
+//	ft_print_tab(MAP);
 	pt = tetri->pos;
 	if (Y >= END)
 		set_point(pt, X + 1, 0);
+	if (END - X < tetri->height || END - Y < tetri->width)
+		return (0);
 	while (X < END)
 	{
 		while (Y < END)
@@ -125,6 +126,7 @@ char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
 	starting_size = 2;
 	while (starting_size < ((nb_tetriminos * 4) / starting_size))
 		starting_size += 1;
+	starting_size = 2;
 	size = starting_size;
 	solved = 0;
 	while (solved == 0)
@@ -136,6 +138,8 @@ char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
 		}
 		if (!(map = create_map(size)))
 			return (NULL);
+		ft_putnbr(size);
+		ft_putln();
 		solved = place_all(map, lst, nb_tetriminos, 0);
 		size++;
 	}

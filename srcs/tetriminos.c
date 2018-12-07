@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 15:14:00 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/06 12:54:34 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/07 13:08:04 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_tetriminos	*new_tetriminos(char c)
 	tetri->c = c;
 	tetri->placed = 0;
 	tetri->pos = new_point(0, 0);
+	tetri->height = 0;
+	tetri->width = 0;
 	return (tetri);
 }
 
@@ -114,16 +116,44 @@ static t_point	*find_min(t_tetriminos *tetri)
 }
 
 /*
+**	Returns point containing the the smallest x and the smallest y encountered
+**	while browsing all tetriminos points
+*/
+
+static t_point	*find_max(t_tetriminos *tetri)
+{
+	t_point		*max;
+	t_point		*pt;
+	int			i;
+
+	max = new_point(0, 0);
+	cpy_point(max, tetri->pt[0]);
+	i = 1;
+	while (i < 4)
+	{
+		pt = tetri->pt[i];
+		if (X_MAX < X)
+			X_MAX = X;
+		if (Y_MAX < Y)
+			Y_MAX = Y;
+		i += 1;
+	}
+	return (max);
+}
+
+/*
 **	Place blocks/points representing tetriminos at the top_left
 */
 
 void			normalize_tetriminos(t_tetriminos *tetri)
 {
 	t_point		*min;
+	t_point		*max;
 	t_point		*pt;
 	int			i;
 
 	min = find_min(tetri);
+	max = find_max(tetri);
 	i = 0;
 	while (i < 4)
 	{
@@ -134,5 +164,7 @@ void			normalize_tetriminos(t_tetriminos *tetri)
 		tetri->blocks[X][Y] = tetri->c;
 		i += 1;
 	}
+	tetri->width = Y_MAX - Y_MIN;
+	tetri->height = X_MAX - X_MIN;
 	ft_memdel((void **)&min);
 }
