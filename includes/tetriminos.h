@@ -20,10 +20,9 @@
 
 typedef struct		s_tetriminos
 {
+	char			c;
 	char			blocks[4][4];
 	t_point			*pt[4];
-	char			c;
-	int				placed;
 	t_point			*pos;
 	int				height;
 	int				width;

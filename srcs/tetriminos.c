@@ -23,7 +23,6 @@ t_tetriminos	*new_tetriminos(char c)
 	if ((tetri = (t_tetriminos *)malloc(sizeof(t_tetriminos))) == NULL)
 		return (NULL);
 	tetri->c = c;
-	tetri->placed = 0;
 	tetri->pos = new_point(0, 0);
 	tetri->height = 0;
 	tetri->width = 0;
