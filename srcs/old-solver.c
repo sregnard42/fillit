@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/07 10:57:02 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/06 16:21:51 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,27 @@ static int	place_at(t_map *map, t_point *pt2, t_tetriminos *tetri)
 
 static int	place_tetri(t_map *map, t_tetriminos *tetri)
 {
+	t_point		*pt;
 
 	if (tetri->placed == 1)
 		return (0);
-	if (tetri->pos->x >= END || tetri->pos->y >= END)
+	pt = tetri->pos;
+	if (X >= END || Y >= END)
 		return (0);
-	while (tetri->pos->x < END)
+	while (X < END)
 	{
-		while (tetri->pos->y < END)
+		while (Y < END)
 		{
-			if (place_at(map, tetri->pos, tetri))
+//	ft_putendl("segfault 3");
+			if (place_at(map, pt, tetri))
 				return (1);
-			tetri->pos->y += 1;
+			Y += 1;
+//	ft_putnbr(Y);
+//	ft_putnbr(END);
+//	ft_putendl("segfault 4");
 		}
-		tetri->pos->y = 0;
-		tetri->pos->x += 1;
+		Y = 0;
+		X += 1;
 	}
 	return (0);
 }
@@ -77,30 +83,40 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 static int	place_all(t_map *map, t_list *head, int nb_tetri, int nb_placed)
 {
 	t_list	*lst;
+//	char	c;
 
 	lst = head;
-	if (nb_tetri == nb_placed)
-		return (1);
 	while (lst)
 	{
-		while (place_tetri(map, TETRI))
+		while (TETRI->placed == 1)
+		{
+			lst = lst->next;
+			if (!lst)
+				return (0);
+		}
+		while (place_tetri(map, TETRI) == 1)
 		{
 			nb_placed++;
 			TETRI->placed = 1;
-			if (place_all(map, head, nb_tetri, nb_placed))
+	ft_putchar(TETRI->c);
+	ft_putendl("");
+	ft_print_tab(map->map);
+//			if (nb_tetri > nb_placed && check_place_enough(map, head) == 0)
+//				return (0);
+//	ft_putendl("");
+//	scanf("%c", &c);
+			if (nb_tetri == nb_placed
+					|| place_all(map, head, nb_tetri, nb_placed))
 				return (1);
 			else
 			{
-				remove_tetri_from_map(map, TETRI);
+//		ft_putstr("move or remove : ");
+//		ft_putchar(TETRI->c);
+//		ft_putendl("");
 				nb_placed--;
 				TETRI->placed = 0;
-				if (Y_POS + 1 < END)
-					Y_POS++;
-				else
-				{
-					Y_POS = 0;
-					X_POS += 1;
-				}
+				remove_tetri_from_map(map, TETRI);
+				Y_POS += 1;
 			}
 		}
 		if (TETRI->placed == 0)
@@ -108,7 +124,7 @@ static int	place_all(t_map *map, t_list *head, int nb_tetri, int nb_placed)
 		lst = lst->next;
 	}
 	return (0);
-}	
+}
 
 /*
 **	Find the smallest map fitting all tetriminos

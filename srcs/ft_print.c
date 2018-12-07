@@ -1,10 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_print.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/12/06 08:47:06 by sregnard          #+#    #+#             */
+/*   Updated: 2018/12/06 08:48:13 by sregnard         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
+
+/*
+** Display all tetriminos contained in the list
+*/
+
+void	print_lst(t_list *lst)
+{
+	while (lst)
+	{
+		print_tetriminos(lst->content);
+		lst = lst->next;
+	}
+}
 
 /*
 **	Display tetriminos values
 */
 
-void				print_tetriminos(t_tetriminos *tetri)
+void	print_tetriminos(t_tetriminos *tetri)
 {
 	int		i;
 	int		j;
@@ -37,7 +62,7 @@ void				print_tetriminos(t_tetriminos *tetri)
 **	Display the coordinates of a point
 */
 
-void		print_point(t_point *pt)
+void	print_point(t_point *pt)
 {
 	if (!pt)
 		return ;
@@ -47,17 +72,4 @@ void		print_point(t_point *pt)
 	ft_putchar(' ');
 	ft_putnbr(pt->y);
 	ft_putchar(')');
-}
-
-/*
-** Display all tetriminos contained in the list
-*/
-
-void	print_lst(t_list *lst)
-{
-	while (lst)
-	{
-		print_tetriminos(lst->content);
-		lst = lst->next;
-	}
 }
