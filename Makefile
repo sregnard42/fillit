@@ -25,7 +25,6 @@ SRC				+=	$(SRCDIR)point.c
 SRC				+=	$(SRCDIR)tetriminos.c
 SRC				+=	$(SRCDIR)lst_tetriminos.c
 SRC				+=	$(SRCDIR)solver.c
-SRC				+=	$(SRCDIR)utils.c
 SRC				+=	$(SRCDIR)map.c
 SRC				+=	$(SRCDIR)ft_print.c
 
