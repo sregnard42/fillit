@@ -6,7 +6,7 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/06 10:02:57 by sregnard         ###   ########.fr        #
+#    Updated: 2018/12/07 15:55:51 by jdugoudr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC				+=	$(SRCDIR)point.c
 SRC				+=	$(SRCDIR)tetriminos.c
 SRC				+=	$(SRCDIR)lst_tetriminos.c
 SRC				+=	$(SRCDIR)solver.c
-SRC				+=	$(SRCDIR)solver_utils.c
+SRC				+=	$(SRCDIR)utils.c
 SRC				+=	$(SRCDIR)map.c
 SRC				+=	$(SRCDIR)ft_print.c
 
@@ -36,7 +36,7 @@ CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror
 XFLAGS			=	-g3
 
-all				: $(LIBFT) $(NAME)
+all				: $(LIBFT) $(OBJDIR) $(NAME)
 
 $(NAME)		:	$(OBJ)
 	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $^ -L libft/ -lft
@@ -44,26 +44,27 @@ $(NAME)		:	$(OBJ)
 $(LIBFT)		:
 	$(MAKE) -C libft/
 
+$(OBJDIR)	:
+	mkdir -p $(OBJDIR)
+
 $(OBJDIR)%.o	:	$(SRCDIR)%.c
 	$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $^
 
 clean			:	
-	rm -rf $(OBJ)
+	rm -rf $(OBJDIR)
 	$(MAKE) clean -C libft/
 
 fclean			:	clean
 	rm -rf $(NAME)
-	rm -rf $(LIBFILL)
 	rm -rf $(LIBFT)
 
 re				:	fclean all
 
 cleanfill		:
-	rm -rf $(OBJ)
+	rm -rf $(OBJDIR)
 
 fcleanfill		:	cleanfill
 	rm -rf $(NAME)
-	rm -rf $(LIBFILL)
 
 refill			:	fcleanfill all
 
