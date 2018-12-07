@@ -3,72 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: jdugoudr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/11 10:48:20 by sregnard          #+#    #+#             */
-/*   Updated: 2018/11/14 11:24:38 by sregnard         ###   ########.fr       */
+/*   Created: 2018/11/12 15:00:43 by jdugoudr          #+#    #+#             */
+/*   Updated: 2018/11/18 16:21:49 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static	int	count_words(char const *s, char c)
+static int	ft_strlentoc(char const *s, char c)
 {
-	int	size;
+	int	i;
 
-	size = 0;
-	while (s && *s)
-	{
-		while (*s && *s == c)
-			s++;
-		if (*s && *s != c)
-		{
-			size++;
-			while (*s && *s != c)
-				s++;
-		}
-	}
-	return (size);
+	i = 0;
+	while (*(s + i) != c && *(s + i) != '\0')
+		i += 1;
+	return (i);
 }
 
-static	int	ft_strlen_word(char const *s, char c)
+static int	ft_cpysplit(char **r, char const *s, char c, int w)
 {
-	int len;
+	int		len;
+	char	*wr;
+	int		res;
 
 	len = 0;
-	while (s && *s && *s != c)
+	wr = NULL;
+	if (*s == '\0')
+		return (1);
+	if (*s == c)
+		return (ft_cpysplit(r, s + 1, c, w));
+	len = ft_strlentoc(s, c);
+	wr = ft_strnew(len);
+	if (wr == NULL)
+		return (-1);
+	*(r + w) = ft_strncpy(wr, s, len);
+	w = w + 1;
+	if ((res = ft_cpysplit(r, s + len, c, w)) < 0)
 	{
-		s++;
-		len++;
+		free(wr);
+		return (-1);
 	}
-	return (len);
+	return (0);
+}
+
+static int	ft_countword(char const *s, char c)
+{
+	int	i;
+	int	cmpts;
+	int	onew;
+
+	onew = 0;
+	cmpts = 0;
+	i = 0;
+	while (*(s + i) != '\0')
+	{
+		while (*(s + i) == c)
+			i += 1;
+		while (*(s + i) != c && *(s + i) != '\0')
+		{
+			i += 1;
+			onew += 1;
+		}
+		if (onew != 0)
+			cmpts += 1;
+		onew = 0;
+	}
+	return (cmpts);
 }
 
 char		**ft_strsplit(char const *s, char c)
 {
-	char	**words;
-	char	**p;
-	int		size;
+	char	**r;
+	int		cmpts;
+	int		res;
 
-	size = count_words(s, c) + 1;
-	if ((words = (char **)ft_memalloc(sizeof(char *) * size)) == NULL)
+	res = 0;
+	r = NULL;
+	if (s == NULL)
 		return (NULL);
-	p = words;
-	while (s && *s)
+	cmpts = ft_countword(s, c);
+	r = (char **)ft_memalloc((cmpts + 1) * sizeof(char *));
+	if (r == NULL)
+		return (NULL);
+	*(r + cmpts) = NULL;
+	res = ft_cpysplit(r, s, c, 0);
+	if (res < 0)
 	{
-		while (*s && *s == c)
-			s++;
-		if (*s && *s != c)
-		{
-			size = ft_strlen_word(s, c);
-			if ((*words = ft_strnew(size)) == NULL)
-				return (NULL);
-			*words = ft_strncpy(*words, s, size);
-			words++;
-			while (*s && *s != c)
-				s++;
-		}
+		free(r);
+		return (NULL);
 	}
-	*words = 0;
-	return (p);
+	return (r);
 }

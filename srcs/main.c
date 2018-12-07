@@ -13,21 +13,17 @@
 #include "fillit.h"
 
 /*
-**	Parse all file content into one string
+ ** read the file
 */
 
-static char	**parse_file(char *file, int *nb_tetriminos)
+static char	*read_file(int fd, char *content)
 {
-	char	**res;
-	char	*content;
 	char	*line;
 	int		line_count;
-	int		fd;
+	int		r;
 
-	content = NULL;
 	line_count = 0;
-	((fd = open(file, O_RDONLY)) == -1) ? trigger_error(ERR_FILE) : 1;
-	while (get_next_line(fd, &line) == 1)
+	while ((r = get_next_line(fd, &line)) == 1)
 	{
 		line_count++;
 		check_line(line, line_count);
@@ -35,11 +31,34 @@ static char	**parse_file(char *file, int *nb_tetriminos)
 		content = ft_stradd(content, "\n");
 		free(line);
 	}
+	if (r == -1)
+	{
+		free(content);
+		trigger_error(ERR_FILE);
+	}
+	return (content);
+}
+
+/*
+**	Parse all file content into one string
+*/
+
+static char	**parse_file(char *file, int *nb_tetriminos)
+{
+	char	**res;
+	char	*content;
+	int		fd;
+
+	content = NULL;
+	((fd = open(file, O_RDONLY)) == -1) ? trigger_error(ERR_FILE) : 1;
+	content = read_file(fd, content);
 	close(fd) == -1 ? trigger_error(ERR_FILE) : 1;
 	*nb_tetriminos = ((ft_strlen(content) + 1) / 21);
 	(ft_strlen(content) + 1) % 21 > 0 ? trigger_error(ERR_NORM) : 1;
 	res = ft_strsplit(content, '\n');
 	free(content);
+	if (res == NULL)
+		trigger_error(ERR_PARS_FILE);
 	return (res);
 }
 
