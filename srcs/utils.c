@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/06 08:50:27 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/06 08:50:32 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/06 13:43:57 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,18 @@ void	reset_tetri_placed(t_list *lst)
 void	remove_tetri_from_map(t_map *map, t_tetriminos *tetri)
 {
 	t_point	*pt;
-	t_point	*pt2;
-	int	i;
 
-	i = 0;
-	pt = tetri->pos;
-	while(i < 4)
+	pt = new_point(0, 0);
+	while (X < END)
 	{
-		pt2 = tetri->pt[i++];
-		MAP[X + X2][Y + Y2] = EMPTY_BLOCK;
+		while (Y < END)
+		{
+			if (MAP[X][Y] == tetri->c)
+				MAP[X][Y] = EMPTY_BLOCK;
+			Y += 1;
+		}
+		Y = 0;
+		X += 1;
 	}
+	ft_memdel((void **)&pt);
 }

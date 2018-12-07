@@ -6,7 +6,7 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/06 10:17:57 by sregnard         ###   ########.fr        #
+#    Updated: 2018/12/06 12:58:14 by sregnard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRC				+=	$(SRCDIR)point.c
 SRC				+=	$(SRCDIR)tetriminos.c
 SRC				+=	$(SRCDIR)lst_tetriminos.c
 SRC				+=	$(SRCDIR)solver.c
-SRC				+=	$(SRCDIR)solver_utils.c
+SRC				+=	$(SRCDIR)utils.c
 SRC				+=	$(SRCDIR)map.c
 SRC				+=	$(SRCDIR)ft_print.c
 

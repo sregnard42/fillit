@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/06 09:11:50 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/06 13:43:41 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 
 	if (tetri->placed == 1)
 		return (0);
+	ft_putln();
+	ft_putchar(tetri->c);
+	ft_putln();
+	ft_putendl("_________");
+	ft_print_tab(MAP);
 	pt = tetri->pos;
 	if (Y >= END)
 		set_point(pt, X + 1, 0);
@@ -62,7 +67,10 @@ static int	place_tetri(t_map *map, t_tetriminos *tetri)
 		while (Y < END)
 		{
 			if (place_at(map, pt, tetri))
+			{
+				tetri->placed = 1;
 				return (1);
+			}
 			Y += 1;
 		}
 		set_point(pt, X + 1, 0);
@@ -81,10 +89,11 @@ static int	place_all(t_map *map, t_list *head, int nb_tetri, int nb_placed)
 	lst = head;
 	while (lst)
 	{
+		if (TETRI->placed == 0)
+			set_point(TETRI->pos, 0, 0);
 		while (place_tetri(map, TETRI) == 1)
 		{
 			nb_placed++;
-			TETRI->placed = 1;
 			if (nb_tetri == nb_placed
 					|| place_all(map, head, nb_tetri, nb_placed))
 				return (1);
@@ -96,8 +105,6 @@ static int	place_all(t_map *map, t_list *head, int nb_tetri, int nb_placed)
 				Y_POS += 1;
 			}
 		}
-		if (TETRI->placed == 0)
-			set_point(TETRI->pos, 0, 0);
 		lst = lst->next;
 	}
 	return (0);
