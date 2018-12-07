@@ -19,7 +19,6 @@
 # include "tetriminos.h"
 # include "lst_tetriminos.h"
 # include "solver.h"
-# include "utils.h"
 # include "map.h"
 # include "ft_print.h"
 # include <fcntl.h>
