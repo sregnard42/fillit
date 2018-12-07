@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 08:23:56 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/03 09:46:31 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/07 12:24:00 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 **	Generate 2D map of given size filled with empty blocks
 */
 
-t_map	*create_map(int size)
+char	**create_map(int size)
 {
 	t_map	*map;
 	int		i;
@@ -24,7 +24,7 @@ t_map	*create_map(int size)
 
 	if (!(map = (t_map *)malloc(sizeof(t_map))))
 		return (NULL);
-	map->size = size;
+//	map->size = size;
 	if (!(MAP = (char **)malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
 	i = 0;
@@ -45,7 +45,7 @@ t_map	*create_map(int size)
 **	Returns 1 if given block exists and is empty in given map
 */
 
-int		block_available(t_map *map, t_point *pt)
+int		block_available(char **map, t_point *pt)
 {
 	if (!pt)
 		return (0);
