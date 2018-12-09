@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 09:14:37 by sregnard          #+#    #+#             */
-/*   Updated: 2018/11/30 13:28:18 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/09 15:12:22 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define ERR_CREAT_LST		"Error while creating list."
 
 void	check_line(char *line, int line_count);
-int	check_blocks(t_tetriminos *tetri);
+int		check_blocks(t_tetriminos *tetri);
 void	trigger_error(char *err_code);
 
 #endif

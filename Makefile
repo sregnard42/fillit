@@ -6,7 +6,7 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/06 12:58:14 by sregnard         ###   ########.fr        #
+#    Updated: 2018/12/09 15:27:20 by jdugoudr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ OBJ				=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 	
 CC				=	gcc	
 CFLAGS			=	-Wall -Wextra -Werror
-XFLAGS			=	-g3
+XFLAGS			=
 
 all				: $(LIBFT) $(OBJDIR) $(NAME)
 

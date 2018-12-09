@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 09:15:29 by sregnard          #+#    #+#             */
-/*   Updated: 2018/11/30 15:11:25 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/09 14:58:58 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	check_line(char *line, int line_count)
 **	______1____21___12____12____1_
 */
 
-int				check_blocks(t_tetriminos *tetri)
+int		check_blocks(t_tetriminos *tetri)
 {
 	t_point	*pt;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/07 14:24:23 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/09 15:12:24 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Remove given tetriminos from map
 */
 
-void	remove_tetri_from_map(t_map *map, t_tetriminos *tetri)
+void		remove_tetri_from_map(t_map *map, t_tetriminos *tetri)
 {
 	t_point	*pt;
 
@@ -116,22 +116,20 @@ static int	place_all(t_map *map, t_list *lst)
 **	Find the smallest map fitting all tetriminos
 */
 
-char		**solve_tetriminos(t_list *lst, int nb_tetriminos)
+char		**solve_tetriminos(t_list *lst, int nb_tetriminos, int start_size)
 {
 	char	**tab;
 	t_map	*map;
-	int		starting_size;
 	int		size;
 	int		solved;
 
-	starting_size = 2;
-	while (starting_size < ((nb_tetriminos * 4) / starting_size))
-		starting_size += 1;
-	size = starting_size;
+	while (start_size < ((nb_tetriminos * 4) / start_size))
+		start_size += 1;
+	size = start_size;
 	solved = 0;
 	while (solved == 0)
 	{
-		if (size > starting_size)
+		if (size > start_size)
 		{
 			ft_free_tab(&(MAP));
 			ft_memdel((void **)&map);

@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 08:52:24 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/06 08:52:31 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/09 15:04:00 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			main(int ac, char **av)
 	if ((lst = lst_tetriminos(tab)) == NULL)
 		trigger_error(ERR_CREAT_LST);
 	ft_free_tab(&tab);
-	tab = solve_tetriminos(lst, nb_tetriminos);
+	tab = solve_tetriminos(lst, nb_tetriminos, STARTING_SIZE);
 	ft_print_tab(tab);
 	ft_free_tab(&tab);
 	ft_lstdel(&lst, &free_tetriminos);
