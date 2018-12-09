@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 08:52:24 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/09 15:04:00 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/09 16:13:53 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,11 @@ static char	**parse_file(char *file, int *nb_tetriminos)
 	content = read_file(fd, content);
 	close(fd) == -1 ? trigger_error(ERR_FILE) : 1;
 	*nb_tetriminos = ((ft_strlen(content) + 1) / 21);
-	(ft_strlen(content) + 1) % 21 > 0 ? trigger_error(ERR_NORM) : 1;
+	if ((ft_strlen(content) + 1) % 21 > 0)
+	{
+		free(content);
+		trigger_error(ERR_NORM);
+	}
 	res = ft_strsplit(content, '\n');
 	free(content);
 	if (res == NULL)
