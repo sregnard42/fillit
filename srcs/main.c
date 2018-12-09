@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 08:52:24 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/09 16:13:53 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/09 16:27:16 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ static char	**parse_file(char *file, int *nb_tetriminos)
 	content = NULL;
 	((fd = open(file, O_RDONLY)) == -1) ? trigger_error(ERR_FILE) : 1;
 	content = read_file(fd, content);
-	close(fd) == -1 ? trigger_error(ERR_FILE) : 1;
+	if (close(fd) == -1)
+	{
+		free(content);
+		trigger_error(ERR_FILE);
+	}
 	*nb_tetriminos = ((ft_strlen(content) + 1) / 21);
 	if ((ft_strlen(content) + 1) % 21 > 0)
 	{
@@ -80,10 +84,16 @@ int			main(int ac, char **av)
 		trigger_error(ERR_USAGE);
 	if ((tab = parse_file(av[1], &nb_tetriminos)) == NULL)
 		trigger_error(ERR_PARS_FILE);
-	nb_tetriminos < MIN_TETRIMINOS ? trigger_error(ERR_TETRI_MIN) : 1;
-	nb_tetriminos > MAX_TETRIMINOS ? trigger_error(ERR_TETRI_MAX) : 1;
+	if (nb_tetriminos < MIN_TETRIMINOS || nb_tetriminos > MAX_TETRIMINOS)
+	{
+		ft_free_tab(&tab);
+		trigger_error(ERR_NB_TETRI);
+	}
 	if ((lst = lst_tetriminos(tab)) == NULL)
+	{
+		ft_free_tab(&tab);
 		trigger_error(ERR_CREAT_LST);
+	}
 	ft_free_tab(&tab);
 	tab = solve_tetriminos(lst, nb_tetriminos, STARTING_SIZE);
 	ft_print_tab(tab);
