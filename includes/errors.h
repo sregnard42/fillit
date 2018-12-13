@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 09:14:37 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/09 16:25:10 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/10 10:47:32 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,10 @@
 # define ERR_TETRI_PT_MAX	"Too many blocks in tetriminos."
 # define ERR_PARS_FILE		"Error while parsing file."
 # define ERR_CREAT_LST		"Error while creating list."
+# define ERR_MAP			"Error while creating a map."
 
 void	check_line(char *line, int line_count);
 int		check_blocks(t_tetriminos *tetri);
-void	trigger_error(char *err_code);
+void	trigger_error(char *err_code, char	*content, char **tab, t_list *lst);
 
 #endif

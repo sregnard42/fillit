@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:41:26 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/09 15:12:24 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/10 11:33:18 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,30 +116,21 @@ static int	place_all(t_map *map, t_list *lst)
 **	Find the smallest map fitting all tetriminos
 */
 
-char		**solve_tetriminos(t_list *lst, int nb_tetriminos, int start_size)
+void		solve_tetriminos(t_map *map, t_list *lst)
 {
-	char	**tab;
-	t_map	*map;
-	int		size;
-	int		solved;
-
-	while (start_size < ((nb_tetriminos * 4) / start_size))
-		start_size += 1;
-	size = start_size;
-	solved = 0;
-	while (solved == 0)
+	if (!(MAP = create_map(map)))
 	{
-		if (size > start_size)
-		{
-			ft_free_tab(&(MAP));
-			ft_memdel((void **)&map);
-		}
-		if (!(map = create_map(size)))
-			return (NULL);
-		solved = place_all(map, lst);
-		size++;
+		ft_memdel((void **)&map);
+		trigger_error(ERR_MAP, NULL, NULL, lst);
 	}
-	tab = MAP;
+	if (place_all(map, lst) == 0)
+	{
+		ft_free_tab(&(MAP));
+		map->size += 1;
+		solve_tetriminos(map, lst);
+		return ;
+	}
+	ft_print_tab(MAP);
+	ft_free_tab(&(MAP));
 	ft_memdel((void **)&map);
-	return (tab);
 }

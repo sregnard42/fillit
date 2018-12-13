@@ -6,12 +6,11 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 17:43:49 by sregnard          #+#    #+#             */
-/*   Updated: 2018/11/14 13:17:24 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/13 08:11:50 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static int	ft_nbrlen(int n)
 {

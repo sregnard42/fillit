@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/29 08:58:36 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/06 08:49:09 by sregnard         ###   ########.fr       */
+/*   Updated: 2018/12/10 11:35:24 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ static int		set_points(char **content, int i, t_tetriminos *tetri)
 			if (content[i][j] == FILLED_BLOCK)
 			{
 				tetri->pt[pt_count++] = new_point(i % 4, j);
-				pt_count > 4 ? trigger_error(ERR_TETRI_PT_MAX) : 0;
+				if (pt_count > 4)
+					return (0);
 			}
 			j += 1;
 		}
 		i += 1;
 	}
-	pt_count < 4 ? trigger_error(ERR_TETRI_PT_MIN) : 0;
+	if (pt_count < 4)
+		return (0);
 	return (check_blocks(tetri));
 }
 

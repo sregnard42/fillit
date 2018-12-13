@@ -6,14 +6,14 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 08:52:24 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/09 16:27:16 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/10 11:55:01 by jdugoudr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 /*
- ** read the file
+** Read the file
 */
 
 static char	*read_file(int fd, char *content)
@@ -27,15 +27,14 @@ static char	*read_file(int fd, char *content)
 	{
 		line_count++;
 		check_line(line, line_count);
-		content = ft_stradd(content, line);
-		content = ft_stradd(content, "\n");
+		if (!(content = ft_stradd(content, line)))
+			trigger_error(ERR_FILE, NULL, NULL, NULL);
+		if (!(content = ft_stradd(content, "\n")))
+			trigger_error(ERR_FILE, NULL, NULL, NULL);
 		free(line);
 	}
 	if (r == -1)
-	{
-		free(content);
-		trigger_error(ERR_FILE);
-	}
+		trigger_error(ERR_FILE, content, NULL, NULL);
 	return (content);
 }
 
@@ -50,23 +49,16 @@ static char	**parse_file(char *file, int *nb_tetriminos)
 	int		fd;
 
 	content = NULL;
-	((fd = open(file, O_RDONLY)) == -1) ? trigger_error(ERR_FILE) : 1;
+	if ((fd = open(file, O_RDONLY)) == -1)
+		trigger_error(ERR_FILE, NULL, NULL, NULL);
 	content = read_file(fd, content);
 	if (close(fd) == -1)
-	{
-		free(content);
-		trigger_error(ERR_FILE);
-	}
+		trigger_error(ERR_FILE, content, NULL, NULL);
 	*nb_tetriminos = ((ft_strlen(content) + 1) / 21);
 	if ((ft_strlen(content) + 1) % 21 > 0)
-	{
-		free(content);
-		trigger_error(ERR_NORM);
-	}
+		trigger_error(ERR_NORM, content, NULL, NULL);
 	res = ft_strsplit(content, '\n');
 	free(content);
-	if (res == NULL)
-		trigger_error(ERR_PARS_FILE);
 	return (res);
 }
 
@@ -76,28 +68,23 @@ static char	**parse_file(char *file, int *nb_tetriminos)
 
 int			main(int ac, char **av)
 {
+	t_map	*map;
 	t_list	*lst;
 	char	**tab;
 	int		nb_tetriminos;
 
 	if (ac != 2)
-		trigger_error(ERR_USAGE);
+		trigger_error(ERR_USAGE, NULL, NULL, NULL);
 	if ((tab = parse_file(av[1], &nb_tetriminos)) == NULL)
-		trigger_error(ERR_PARS_FILE);
+		trigger_error(ERR_PARS_FILE, NULL, NULL, NULL);
 	if (nb_tetriminos < MIN_TETRIMINOS || nb_tetriminos > MAX_TETRIMINOS)
-	{
-		ft_free_tab(&tab);
-		trigger_error(ERR_NB_TETRI);
-	}
+		trigger_error(ERR_NB_TETRI, NULL, tab, NULL);
 	if ((lst = lst_tetriminos(tab)) == NULL)
-	{
-		ft_free_tab(&tab);
-		trigger_error(ERR_CREAT_LST);
-	}
+		trigger_error(ERR_CREAT_LST, NULL, tab, NULL);
 	ft_free_tab(&tab);
-	tab = solve_tetriminos(lst, nb_tetriminos, STARTING_SIZE);
-	ft_print_tab(tab);
-	ft_free_tab(&tab);
+	if (!(map = new_map(STARTING_SIZE)))
+		trigger_error(ERR_MAP, NULL, NULL, lst);
+	solve_tetriminos(map, lst);
 	ft_lstdel(&lst, &free_tetriminos);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/24 09:15:29 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/09 14:58:58 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/10 11:34:47 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	check_line(char *line, int line_count)
 	if (line_count % 5 == 0)
 	{
 		if (line[0] != EOS)
-			trigger_error(ERR_SEP);
+			trigger_error(ERR_SEP, NULL, NULL, NULL);
 	}
 	else if (ft_strlen(line) != 4)
-		trigger_error(ERR_LEN);
+		trigger_error(ERR_LEN, NULL, NULL, NULL);
 	while (*line)
 	{
 		if (*line != EMPTY_BLOCK && *line != FILLED_BLOCK)
-			trigger_error(ERR_CHAR);
+			trigger_error(ERR_CHAR, NULL, NULL, NULL);
 		line++;
 	}
 }
@@ -73,7 +73,7 @@ int		check_blocks(t_tetriminos *tetri)
 ** Show error and exit program (SET DEBUG AT 1 in errors.h to show more errors)
 */
 
-void	trigger_error(char *err_msg)
+void	trigger_error(char *err_msg, char *content, char **tab, t_list *lst)
 {
 	ft_putendl(MSG_ERR);
 	if (ft_strequ(err_msg, ERR_USAGE))
@@ -83,5 +83,11 @@ void	trigger_error(char *err_msg)
 		ft_putstr(DEBUG_ON);
 		ft_putendl(err_msg);
 	}
+	if (content != NULL)
+		free(content);
+	if (tab != NULL)
+		ft_free_tab(&tab);
+	if (lst != NULL)
+		ft_lstdel(&lst, &free_tetriminos);
 	exit(EXIT_FAILURE);
 }

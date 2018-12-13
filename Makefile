@@ -6,7 +6,7 @@
 #    By: sregnard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/07 14:51:18 by sregnard          #+#    #+#              #
-#    Updated: 2018/12/09 15:27:20 by jdugoudr         ###   ########.fr        #
+#    Updated: 2018/12/10 13:07:57 by jdugoudr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,10 @@ CC				=	gcc
 CFLAGS			=	-Wall -Wextra -Werror
 XFLAGS			=
 
-all				: $(LIBFT) $(OBJDIR) $(NAME)
+all				: $(NAME)
 
-$(NAME)		:	$(OBJ)
-	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $^ -L libft/ -lft
+$(NAME)		:	$(LIBFT) $(OBJDIR) $(OBJ)
+	$(CC) $(CFLAGS) $(XFLAGS) $(HEADERS) -o $@ $(OBJ) -L libft/ -lft
 
 $(LIBFT)		:
 	$(MAKE) -C libft/

@@ -6,7 +6,7 @@
 /*   By: sregnard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 14:13:18 by sregnard          #+#    #+#             */
-/*   Updated: 2018/12/09 15:10:03 by jdugoudr         ###   ########.fr       */
+/*   Updated: 2018/12/10 11:32:05 by sregnard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 
 # define STARTING_SIZE	2
 
-char	**solve_tetriminos(t_list *lst, int nb_tetriminos, int starting_size);
+void	solve_tetriminos(t_map *map, t_list *lst);
 
 #endif
